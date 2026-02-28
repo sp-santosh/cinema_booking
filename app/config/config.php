@@ -23,7 +23,7 @@ if (!defined('APP_PATH')) {
     define('APP_PATH',         ROOT_PATH . '/app');
 }
 if (!defined('VIEWS_PATH')) {
-    define('VIEWS_PATH',       ROOT_PATH . '/views');
+    define('VIEWS_PATH',       APP_PATH . '/views');
 }
 define('PUBLIC_PATH',      ROOT_PATH . '/public');
 define('STORAGE_PATH',     ROOT_PATH . '/storage');
