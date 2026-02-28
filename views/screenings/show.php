@@ -10,13 +10,11 @@
         <!-- Seat map -->
         <section class="seat-map-section">
             <h2>Choose Your Seats</h2>
-            <div class="seat-legend">
-                <span class="seat seat--available">Available</span>
-                <span class="seat seat--taken">Taken</span>
-                <span class="seat seat--selected">Selected</span>
-            </div>
-
             <div class="screen-label">SCREEN</div>
+
+            <h3 style="text-align: center; margin-bottom: 2rem; color: var(--c-text-main); font-weight: 500;">
+                <?= View::e($screening['hall_name']) ?>
+            </h3>
 
             <form action="<?= APP_URL ?>/bookings" method="POST" id="booking-form">
                 <?= Csrf::field() ?>
@@ -45,6 +43,18 @@
                             <?php endforeach; ?>
                         </div>
                     <?php endforeach; ?>
+                </div>
+
+                <div class="seat-legend" style="margin-bottom: 2rem;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="seat seat--available" style="cursor: default;"></span> Available
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="seat seat--taken" style="cursor: default;"></span> Taken
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="seat seat--selected" style="cursor: default;"></span> Selected
+                    </div>
                 </div>
 
                 <div class="booking-summary" id="booking-summary" style="display:none">

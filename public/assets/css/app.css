@@ -527,16 +527,20 @@ textarea:focus {
 
 .screen-label {
     text-align: center;
-    background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(200,200,200,0.8) 100%);
     padding: 1rem;
-    border-top: 2px solid var(--c-primary);
     border-radius: var(--rad-lg) var(--rad-lg) 0 0;
     margin: 0 auto var(--sp-2xl) auto;
     font-weight: bold;
     letter-spacing: 0.5rem;
-    color: var(--c-text-muted);
+    color: #111;
     max-width: 80%;
-    transform: perspective(200px) rotateX(-5deg);
+    transform: perspective(300px) rotateX(-15deg);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .seat-map {
@@ -554,59 +558,55 @@ textarea:focus {
 }
 
 .row-label {
-    width: 30px;
+    width: 40px;
     font-weight: bold;
     color: var(--c-text-muted);
+    font-size: 0.75rem;
+    text-align: right;
+    margin-right: 2rem;
 }
 
 .seat {
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--rad-sm) var(--rad-sm) 0 0;
-    font-size: 0.875rem;
-    font-weight: 500;
+    border-radius: 4px 4px 12px 12px;
+    font-size: 0; /* Hide text visually if we keep numbers in HTML */
     cursor: pointer;
     transition: all var(--trans-fast);
     user-select: none;
-}
-
-.seat::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 10%;
-    width: 80%;
-    height: 4px;
-    border-radius: var(--rad-full);
+    border: 2px solid transparent;
 }
 
 .seat--available {
-    background-color: var(--c-border);
-    color: var(--c-text-main);
+    border-color: #eab308; /* A nice golden/orange color like the 'Regular' seats in the pic */
+    background-color: transparent;
 }
-.seat--available::after { background-color: rgba(255,255,255,0.1); }
 
 .seat--available:hover {
-    background-color: var(--c-bg-surface-hover);
+    background-color: rgba(234, 179, 8, 0.2);
     transform: scale(1.1);
 }
 
 .seat--taken {
-    background-color: #1a1c26;
-    color: rgba(255,255,255,0.2);
+    background-color: #4b5563; /* Grayed out */
+    border-color: #4b5563;
+    color: transparent;
     cursor: not-allowed;
+    opacity: 0.6;
 }
-.seat--taken::after { background-color: #111; }
 
 .seat--selected {
-    background-color: var(--c-success);
+    background-color: #eab308;
+    border-color: #eab308;
     color: #fff;
 }
-.seat--selected::after { background-color: rgba(0,0,0,0.3); }
+.seat--selected:hover {
+    transform: scale(1.1);
+}
 
 .seat input[type="checkbox"] {
     display: none;
