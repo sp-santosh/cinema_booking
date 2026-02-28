@@ -1,0 +1,22 @@
+<?php
+/**
+ * Database connection configuration.
+ *
+ * Override any value by setting the corresponding environment variable
+ * (e.g. in a .env file loaded before this is included).
+ */
+
+return [
+    'driver'   => 'mysql',
+    'host'     => getenv('DB_HOST')     ?: '127.0.0.1',
+    'port'     => getenv('DB_PORT')     ?: '3306',
+    'dbname'   => getenv('DB_NAME')     ?: 'cinema_booking',
+    'username' => getenv('DB_USER')     ?: 'root',
+    'password' => getenv('DB_PASS')     ?: 'root',
+    'charset'  => 'utf8mb4',
+    'options'  => [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES   => false,
+    ],
+];
