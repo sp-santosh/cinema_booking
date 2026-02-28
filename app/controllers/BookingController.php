@@ -8,6 +8,7 @@ class BookingController extends Controller
     private Ticket    $ticketModel;
     private Screening $screeningModel;
     private Seat      $seatModel;
+    private Payment   $paymentModel;
 
     public function __construct()
     {
@@ -15,6 +16,7 @@ class BookingController extends Controller
         $this->ticketModel    = new Ticket();
         $this->screeningModel = new Screening();
         $this->seatModel      = new Seat();
+        $this->paymentModel   = new Payment();
     }
 
     // GET /bookings  – logged-in user's booking history
@@ -107,10 +109,12 @@ class BookingController extends Controller
         }
 
         $tickets = $this->ticketModel->getByBooking((int) $id);
+        $payment = $this->paymentModel->getByBooking((int) $id);
 
         $this->render('booking/confirmation', [
             'booking'   => $booking,
             'tickets'   => $tickets,
+            'payment'   => $payment,
             'pageTitle' => 'Booking Confirmed',
         ]);
     }

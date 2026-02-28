@@ -22,7 +22,7 @@
                         <p class="booking-card__amount">£<?= number_format((float)$b['total_amount'], 2) ?></p>
                     </div>
                     <div class="booking-card__actions">
-                        <a href="<?= APP_URL ?>/bookings/<?= $b['booking_id'] ?>" class="btn btn--sm btn--outline">View</a>
+                        <a href="<?= APP_URL ?>/bookings/<?= $b['booking_id'] ?>/confirmation" class="btn btn--sm btn--outline">View Ticket</a>
                         <?php if ($b['status'] === 'CONFIRMED'): ?>
                             <form action="<?= APP_URL ?>/bookings/<?= $b['booking_id'] ?>/cancel" method="POST" class="inline-form">
                                 <?= Csrf::field() ?>
