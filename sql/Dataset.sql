@@ -54,6 +54,7 @@ CREATE TABLE movies (
   age_rating VARCHAR(20) NOT NULL,
   movie_rating DECIMAL(3,1),   -- e.g. 8.4 from API
   description TEXT,
+  poster_url VARCHAR(255),
   is_active TINYINT(1) NOT NULL DEFAULT 1
 );
 
