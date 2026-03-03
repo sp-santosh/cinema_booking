@@ -31,6 +31,10 @@ class PaymentsController extends Controller
         // For now, record as a direct CARD payment.
         $this->paymentModel->create($bookingId, (float) $booking['total_amount'], 'CARD');
 
+        // Trigger ticket email job
+        $job = new SendTicketEmailJob();
+        $job->handle([$bookingId]);
+
         $this->flash('success', 'Payment recorded successfully.');
         $this->redirect(APP_URL . '/bookings/' . $bookingId . '/confirmation');
     }

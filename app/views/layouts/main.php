@@ -38,6 +38,18 @@
     </div>
 </header>
 
+<?php if (Auth::check() && !Auth::isVerified()): ?>
+    <div class="verify-banner">
+        <div class="container">
+            <span>⚠️ <b>Your email is not verified.</b> Please check your inbox.</span>
+            <form action="<?= APP_URL ?>/verify/resend" method="POST" style="display:inline">
+                <?= Csrf::field() ?>
+                <button type="submit" class="btn-link">Resend verification email</button>
+            </form>
+        </div>
+    </div>
+<?php endif; ?>
+
 <!-- ── Flash messages ───────────────────────────────────────────── -->
 <?php if (!empty($_SESSION['flash'])): ?>
     <?php foreach ($_SESSION['flash'] as $type => $msg): ?>

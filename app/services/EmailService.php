@@ -13,10 +13,13 @@ class EmailService
 
     public function send(string $to, string $subject, string $htmlBody): bool
     {
-        // Mocking email dispatch.
-        // In real app use PHPMailer or native mail().
-        error_log("[MOCK EMAIL] To: $to | Subject: $subject");
-        return true;
+        if (empty($this->config['username']) || empty($this->config['password'])) {
+            error_log("[MOCK EMAIL] To: $to | Subject: $subject (Set MAIL_USERNAME/PASSWORD in config/mail.php to send real mail)");
+            return true;
+        }
+
+        $mailer = new SMTPSender($this->config);
+        return $mailer->send($to, $subject, $htmlBody);
     }
 
     public function sendTicketEmail(array $user, array $booking, array $tickets): void

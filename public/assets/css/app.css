@@ -98,6 +98,42 @@ a:hover {
     margin-bottom: var(--sp-2xl);
 }
 
+/* ── Verification Banner ────────────────────────────────────────── */
+.verify-banner {
+    background: rgba(245, 158, 11, 0.1);
+    border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+    padding: var(--sp-sm) 0;
+    color: var(--c-warning);
+    font-size: 14px;
+    text-align: center;
+}
+
+.verify-banner .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--sp-md);
+}
+
+.verify-banner b {
+    color: var(--c-warning);
+}
+
+.verify-banner .btn-link {
+    background: none;
+    border: none;
+    color: var(--c-accent);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0;
+}
+
+.verify-banner .btn-link:hover {
+    color: var(--c-primary);
+}
+
 .section__title {
     font-size: 2rem;
     margin-bottom: var(--sp-xl);

@@ -105,6 +105,11 @@ class AuthController extends Controller
         Auth::login($user);
 
         $this->flash('success', 'Welcome to CineBook! Your account has been created.');
+        
+        // Trigger verification email job
+        $job = new SendVerificationEmailJob();
+        $job->handle([$userId]);
+
         $this->redirect(APP_URL . '/');
     }
 
@@ -113,5 +118,52 @@ class AuthController extends Controller
     {
         Auth::logout();
         $this->redirect(APP_URL . '/login');
+    }
+
+    // GET /verify
+    public function verify(): void
+    {
+        $token = $this->query('token');
+
+        if (!$token) {
+            $this->flash('error', 'Invalid verification link.');
+            $this->redirect(APP_URL . '/');
+        }
+
+        $user = $this->userModel->findByToken($token);
+
+        if (!$user) {
+            $this->flash('error', 'The verification link is invalid or has expired.');
+            $this->redirect(APP_URL . '/');
+        }
+
+        $this->userModel->markVerified($user['user_id']);
+        
+        // Update session user data
+        if (Auth::id() === (int)$user['user_id']) {
+            $updatedUser = $this->userModel->findById($user['user_id']);
+            Auth::login($updatedUser);
+        }
+
+        $this->flash('success', 'Email verified successfully! You can now log in.');
+        $this->redirect(APP_URL . '/login');
+    }
+
+    // POST /verify/resend
+    public function resendVerification(): void
+    {
+        $this->requireAuth();
+        Csrf::verify();
+
+        if (Auth::isVerified()) {
+            $this->flash('info', 'Your email is already verified.');
+            $this->redirect(APP_URL . '/');
+        }
+
+        $job = new SendVerificationEmailJob();
+        $job->handle([Auth::id()]);
+
+        $this->flash('success', 'A new verification link has been sent to your email.');
+        $this->redirect($_SERVER['HTTP_REFERER'] ?? APP_URL . '/');
     }
 }
