@@ -40,6 +40,28 @@ class User extends Model
         return $this->update(['is_active' => (int) $active], ['user_id' => $userId]);
     }
 
+    public function setVerificationToken(int $userId, string $token): int
+    {
+        return $this->update(['verification_token' => $token], ['user_id' => $userId]);
+    }
+
+    public function findByToken(string $token): ?array
+    {
+        $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE verification_token = ? LIMIT 1");
+        $stmt->execute([$token]);
+        $row = $stmt->fetch();
+        return $row ?: null;
+    }
+
+    public function markVerified(int $userId): int
+    {
+        return $this->update([
+            'email_verified_at' => date('Y-m-d H:i:s'),
+            'verification_token' => null,
+            'is_active' => 1
+        ], ['user_id' => $userId]);
+    }
+
     /** Paginate all customers (role = ROLE_CUSTOMER). */
     public function getCustomers(int $page = 1, int $limit = ITEMS_PER_PAGE): array
     {

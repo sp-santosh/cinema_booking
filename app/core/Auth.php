@@ -71,4 +71,10 @@ class Auth
     {
         return (self::user()['role_id'] ?? null) === ROLE_ADMIN;
     }
+
+    /** True if the current user has verified their email. */
+    public static function isVerified(): bool
+    {
+        return !empty(self::user()['email_verified_at']);
+    }
 }

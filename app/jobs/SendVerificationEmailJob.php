@@ -20,8 +20,10 @@ class SendVerificationEmailJob
             return;
         }
 
-        // Mock verification token generation
+        // Generate and store verification token
         $token = bin2hex(random_bytes(32));
+        $userModel->setVerificationToken($userId, $token);
+
         $verifyUrl = APP_URL . "/verify?token={$token}";
 
         $emailService = new EmailService();
