@@ -34,12 +34,17 @@ INSERT INTO seats (hall_id, row_label, seat_number) VALUES
 (2, 'B', 1), (2, 'B', 2), (2, 'B', 3);
 
 -- 6. Movies
-INSERT INTO movies (movie_id, title, duration_minutes, age_rating, movie_rating, description) VALUES 
-(1, 'Dune: Part Two', 166, '12A', 8.9, 'Paul Atreides unites with Chani and the Fremen while on a warpath of revenge against the conspirators who destroyed his family.'),
-(2, 'Oppenheimer', 180, '15', 8.4, 'The story of American scientist, J. Robert Oppenheimer, and his role in the development of the atomic bomb.'),
-(3, 'Kung Fu Panda 4', 94, 'PG', 6.7, 'After Po is tapped to become the Spiritual Leader of the Valley of Peace, he needs to find and train a new Dragon Warrior.'),
-(4, 'Godzilla x Kong: The New Empire', 115, '12A', 6.6, 'Two ancient titans, Godzilla and Kong, clash in an epic battle as humans unravel their intertwined origins.'),
-(5, 'Civil War', 109, '15', 7.6, 'A journey across a dystopian future America, following a team of military-embedded journalists as they race against time.');
+INSERT INTO movies (movie_id, title, duration_minutes, age_rating, movie_rating, description, poster_url) VALUES 
+(1, 'Dune: Part Two', 166, '12A', 8.9, 'Paul Atreides unites with Chani and the Fremen while on a warpath of revenge against the conspirators who destroyed his family.', '/assets/images/posters/dune-part-two.png'),
+(2, 'Oppenheimer', 180, '15', 8.4, 'The story of American scientist, J. Robert Oppenheimer, and his role in the development of the atomic bomb.', '/assets/images/posters/oppenheimer.png'),
+(3, 'Kung Fu Panda 4', 94, 'PG', 6.7, 'After Po is tapped to become the Spiritual Leader of the Valley of Peace, he needs to find and train a new Dragon Warrior.', '/assets/images/posters/kung-fu-panda-4.png'),
+(4, 'Godzilla x Kong: The New Empire', 115, '12A', 6.6, 'Two ancient titans, Godzilla and Kong, clash in an epic battle as humans unravel their intertwined origins.', '/assets/images/posters/godzilla-x-kong.png'),
+(5, 'Civil War', 109, '15', 7.6, 'A journey across a dystopian future America, following a team of military-embedded journalists as they race against time.', '/assets/images/posters/civil-war.png'),
+(6, 'Deadpool & Wolverine', 127, '15', 7.9, 'A weary Wolverine finds himself joining forces with the Merc with a Mouth to defeat a common enemy.', '/assets/images/posters/deadpool-wolverine.png'),
+(7, 'Inside Out 2', 96, 'U', 7.7, 'Follow Riley, in her teenage years, encountering new emotions.', '/assets/images/posters/inside-out-2.png'),
+(8, 'The Batman', 176, '15', 7.8, 'When a sadistic serial killer begins murdering key political figures in Gotham, Batman is forced to investigate the city\'s hidden corruption.', '/assets/images/posters/the-batman.png'),
+(9, 'Gladiator II', 148, '15', 6.9, 'Years after witnessing the death of the revered hero Maximus at the hands of his uncle, Lucius is forced to enter the Colosseum.', '/assets/images/posters/gladiator-ii.png'),
+(10, 'Joker: Folie à Deux', 138, '15', 5.3, 'Failed comedian Arthur Fleck meets the love of his life, Harley Quinn, while incarcerated at Arkham State Hospital.', '/assets/images/posters/joker-folie-a-deux.png');
 
 -- 7. Screenings (Scheduling some for upcoming dates)
 -- NOTE: We use DATE_ADD(NOW(), INTERVAL X DAY) so the seed data is always valid relative to when you run it!

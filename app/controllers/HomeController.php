@@ -21,7 +21,7 @@ class HomeController extends Controller
 
         $this->render('movies/index', [
             'upcomingScreenings' => $upcomingScreenings,
-            'featuredMovies'     => $featuredMovies,
+            'movies'             => $featuredMovies,
             'pageTitle'          => 'CineBook – Book Your Cinema Tickets',
         ]);
     }

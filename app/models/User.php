@@ -62,6 +62,31 @@ class User extends Model
         ], ['user_id' => $userId]);
     }
 
+    public function setResetToken(int $userId, ?string $token, ?string $expiry = null): int
+    {
+        return $this->update([
+            'reset_token'        => $token,
+            'reset_token_expiry' => $expiry
+        ], ['user_id' => $userId]);
+    }
+
+    public function findByResetToken(string $token): ?array
+    {
+        $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE reset_token = ? LIMIT 1");
+        $stmt->execute([$token]);
+        $row = $stmt->fetch();
+        return $row ?: null;
+    }
+
+    public function updatePassword(int $userId, string $newPassword): int
+    {
+        return $this->update([
+            'password_hash'      => password_hash($newPassword, PASSWORD_BCRYPT, ['cost' => BCRYPT_COST]),
+            'reset_token'        => null,
+            'reset_token_expiry' => null
+        ], ['user_id' => $userId]);
+    }
+
     /** Paginate all customers (role = ROLE_CUSTOMER). */
     public function getCustomers(int $page = 1, int $limit = ITEMS_PER_PAGE): array
     {

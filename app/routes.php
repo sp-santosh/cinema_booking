@@ -14,6 +14,10 @@ Router::post('/register',               'AuthController@register');
 Router::post('/logout',                 'AuthController@logout');
 Router::get('/verify',                  'AuthController@verify');
 Router::post('/verify/resend',           'AuthController@resendVerification');
+Router::get('/forgot-password',         'AuthController@showForgotPassword');
+Router::post('/forgot-password',        'AuthController@forgotPassword');
+Router::get('/reset-password',          'AuthController@showResetPassword');
+Router::post('/reset-password',         'AuthController@resetPassword');
 
 // Movies (public)
 Router::get('/movies',                  'MoviesController@index');

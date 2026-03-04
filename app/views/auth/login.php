@@ -36,6 +36,9 @@
                 required
                 autocomplete="current-password"
             >
+            <div style="text-align: right; margin-top: 5px;">
+                <a href="<?= APP_URL ?>/forgot-password" style="font-size: 0.85rem; color: #aaa;">Forgot password?</a>
+            </div>
         </div>
 
         <button type="submit" class="btn btn--primary btn--full">Sign in</button>

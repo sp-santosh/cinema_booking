@@ -23,7 +23,15 @@
                 <?php foreach ($movies as $movie): ?>
                     <a href="<?= APP_URL ?>/movies/<?= $movie['movie_id'] ?>" class="movie-card">
                         <?php if(!empty($movie['poster_url'])): ?>
-                            <div class="movie-card__poster" style="background-image: url('<?= View::e($movie['poster_url']) ?>');"></div>
+                            <?php
+                                $posterSrc = $movie['poster_url'];
+                                if (str_starts_with($posterSrc, '/')) {
+                                    $posterSrc = APP_URL . $posterSrc;
+                                }
+                            ?>
+                            <div class="movie-card__poster">
+                                <img src="<?= View::e($posterSrc) ?>" alt="<?= View::e($movie['title']) ?>" loading="lazy" referrerpolicy="no-referrer">
+                            </div>
                         <?php else: ?>
                             <div class="movie-card__poster movie-card__poster--placeholder">🎬</div>
                         <?php endif; ?>

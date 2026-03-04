@@ -166,4 +166,96 @@ class AuthController extends Controller
         $this->flash('success', 'A new verification link has been sent to your email.');
         $this->redirect($_SERVER['HTTP_REFERER'] ?? APP_URL . '/');
     }
+
+    // GET /forgot-password
+    public function showForgotPassword(): void
+    {
+        Middleware::guest('/');
+        $this->render('auth/forgot_password', [], 'layouts/auth');
+    }
+
+    // POST /forgot-password
+    public function forgotPassword(): void
+    {
+        Middleware::guest('/');
+        Csrf::verify();
+
+        $v = new Validator($_POST);
+        $v->required(['email'])->email('email');
+
+        if ($v->fails()) {
+            $this->render('auth/forgot_password', ['errors' => $v->errors(), 'old' => $_POST], 'layouts/auth');
+            return;
+        }
+
+        $user = $this->userModel->findByEmail($this->input('email'));
+
+        if ($user) {
+            $token = bin2hex(random_bytes(32));
+            $expiry = date('Y-m-d H:i:s', strtotime('+1 hour'));
+            $this->userModel->setResetToken($user['user_id'], $token, $expiry);
+
+            $emailService = new EmailService();
+            $emailService->sendPasswordResetEmail($user, $token);
+        }
+
+        // Always show success message for security (don't reveal if email exists)
+        $this->flash('info', 'If an account exists for that email, a password reset link has been sent.');
+        $this->redirect(APP_URL . '/forgot-password');
+    }
+
+    // GET /reset-password
+    public function showResetPassword(): void
+    {
+        Middleware::guest('/');
+        $token = $this->query('token');
+
+        if (!$token) {
+            $this->flash('error', 'Invalid reset link.');
+            $this->redirect(APP_URL . '/forgot-password');
+        }
+
+        $user = $this->userModel->findByResetToken($token);
+
+        if (!$user || strtotime($user['reset_token_expiry']) < time()) {
+            $this->flash('error', 'The reset link is invalid or has expired.');
+            $this->redirect(APP_URL . '/forgot-password');
+        }
+
+        $this->render('auth/reset_password', ['token' => $token], 'layouts/auth');
+    }
+
+    // POST /reset-password
+    public function resetPassword(): void
+    {
+        Middleware::guest('/');
+        Csrf::verify();
+
+        $v = new Validator($_POST);
+        $v->required(['token', 'password', 'password_confirm'])
+          ->min('password', 8)
+          ->matches('password_confirm', 'password');
+
+        if ($v->fails()) {
+            $this->render('auth/reset_password', [
+                'errors' => $v->errors(),
+                'token'  => $this->input('token')
+            ], 'layouts/auth');
+            return;
+        }
+
+        $token = $this->input('token');
+        $user = $this->userModel->findByResetToken($token);
+
+        if (!$user || strtotime($user['reset_token_expiry']) < time()) {
+            $this->flash('error', 'The reset link is invalid or has expired.');
+            $this->redirect(APP_URL . '/forgot-password');
+            return;
+        }
+
+        $this->userModel->updatePassword($user['user_id'], $this->input('password'));
+
+        $this->flash('success', 'Your password has been reset. You can now log in.');
+        $this->redirect(APP_URL . '/login');
+    }
 }

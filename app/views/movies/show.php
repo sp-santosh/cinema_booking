@@ -1,8 +1,14 @@
 <div class="container">
     <div class="movie-detail">
         <?php if(!empty($movie['poster_url'])): ?>
+            <?php
+                $posterSrc = $movie['poster_url'];
+                if (str_starts_with($posterSrc, '/')) {
+                    $posterSrc = APP_URL . $posterSrc;
+                }
+            ?>
             <div class="movie-detail__poster">
-                <img src="<?= View::e($movie['poster_url']) ?>" alt="<?= View::e($movie['title']) ?> Poster">
+                <img src="<?= View::e($posterSrc) ?>" alt="<?= View::e($movie['title']) ?> Poster" referrerpolicy="no-referrer">
             </div>
         <?php endif; ?>
         <div class="movie-detail__info">
